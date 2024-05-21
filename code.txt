@@ -1,6 +1,8 @@
 create table class(
 class_id int primary key,
-class_name varchar(40)
+class_name varchar(40),
+mentor_id int,
+foreign key(mentor_id) references mentor(mentor_id)
 );
 
 create table student(
@@ -8,13 +10,46 @@ student_id int primary key,
 first_name varchar(30),
 last_name varchar(30),
 class_id int,
-foreign key(class_id) references class(class_id)
+foreign key(class_id) references class(class_id),
+attendance_id int,
+foreign key(attendance_id) references attendance(attendance_id),
+placement_id int,
+foreign key(placement_id) references placement(placement_id),
+task_id int,
+foreign key(task_id) references task(task_id)
 );
 
+create table attendance(
+attendance_id int primary key,
+attendance_percent int,
+student_id int,
+foreign key(student_id) references student(student_id)
+);
 create table fees(
 fees_id int primary key,
 class_id int,
 student_id int,
 foreign key(student_id) references student(student_id),
 foreign key(class_id) references class(class_id)
-)
+);
+
+create table placement(
+placement_id int primary key,
+placement_eligibility int,
+student_id int,
+foreign key(student_id) references student(student_id)
+);
+
+create table task(
+task_id int primary key,
+completion_percent int,
+student_id int,
+foreign key(student_id) references student(student_id)
+);
+create table mentor(
+mentor_id int primary key,
+first_name varchar(30),
+last_name varchar(30),
+class_id int,
+foreign key (class_id) references class(class_id)
+);
